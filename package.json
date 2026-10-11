@@ -8,7 +8,10 @@
     "start": "node dist/index.js",
     "dev": "ts-node src/index.ts",
     "test": "jest",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "video:preview": "cd video/product-promo && hyperframes preview",
+    "video:check": "cd video/product-promo && hyperframes check",
+    "video:render": "ts-node src/video/renderPromos.ts"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -21,6 +24,7 @@
     "@types/jest": "^29.5.12",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20.11.5",
+    "hyperframes": "^0.8.148",
     "jest": "^29.7.0",
     "ts-jest": "^29.1.2",
     "ts-node": "^10.9.2",

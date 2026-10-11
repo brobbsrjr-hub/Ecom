@@ -1,0 +1,400 @@
+<!doctype html>
+<html
+  lang="en"
+  data-composition-variables='[
+    {"id":"name","type":"string","label":"Output file name (batch renders)","default":"product-promo"},
+    {"id":"productName","type":"string","label":"Product name","default":"Golden Hour Vitamin C Serum","maxLength":48},
+    {"id":"tagline","type":"string","label":"Tagline","default":"Brighter skin in 14 days.","maxLength":64},
+    {"id":"badge","type":"string","label":"Badge (empty to hide)","default":"NEW","maxLength":16},
+    {"id":"feature1","type":"string","label":"Feature 1","default":"15% pure vitamin C","maxLength":32},
+    {"id":"feature2","type":"string","label":"Feature 2","default":"Fragrance free","maxLength":32},
+    {"id":"feature3","type":"string","label":"Feature 3","default":"Dermatologist tested","maxLength":32},
+    {"id":"price","type":"string","label":"Price","default":"$29","maxLength":12},
+    {"id":"compareAtPrice","type":"string","label":"Compare-at price (empty to hide)","default":"$39","maxLength":12},
+    {"id":"cta","type":"string","label":"Call to action","default":"Shop now","maxLength":20},
+    {"id":"shopUrl","type":"string","label":"Shop URL","default":"yourstore.com","maxLength":40},
+    {"id":"image","type":"string","label":"Product image","default":"assets/product-placeholder.svg"},
+    {"id":"accent","type":"color","label":"Accent","default":"#f2a65a"},
+    {"id":"bg","type":"color","label":"Background","default":"#141016"}
+  ]'
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>Product Promo</title>
+    <script src="assets/gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: "Inter";
+        src: url("assets/inter-latin-500-normal.woff2") format("woff2");
+        font-weight: 500;
+      }
+      @font-face {
+        font-family: "Inter";
+        src: url("assets/inter-latin-800-normal.woff2") format("woff2");
+        font-weight: 800;
+      }
+      body {
+        margin: 0;
+        background: #141016;
+        color: #fff;
+        font-family: "Inter", sans-serif;
+        font-weight: 500;
+      }
+      #root {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+      #bg {
+        position: absolute;
+        inset: 0;
+        background: var(--bg, #141016);
+        overflow: hidden;
+      }
+      .blob {
+        position: absolute;
+        border-radius: 50%;
+        background: var(--accent, #f2a65a);
+        filter: blur(140px);
+      }
+      #blob-a {
+        width: 900px;
+        height: 900px;
+        left: -260px;
+        top: 80px;
+        opacity: 0.32;
+      }
+      #blob-b {
+        width: 760px;
+        height: 760px;
+        left: 520px;
+        top: 1180px;
+        opacity: 0.2;
+      }
+
+      /* Scene 1: hook */
+      #hook {
+        position: absolute;
+        inset: 0;
+      }
+      #hook-inner {
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        padding: 0 90px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 44px;
+      }
+      #badge {
+        display: inline-block;
+        padding: 14px 30px;
+        border-radius: 999px;
+        background: var(--accent, #f2a65a);
+        color: #141016;
+        font-weight: 800;
+        font-size: 40px;
+        letter-spacing: 0.08em;
+      }
+      #name {
+        margin: 0;
+        font-weight: 800;
+        font-size: 140px;
+        line-height: 1.02;
+        letter-spacing: -0.03em;
+        max-width: 900px;
+      }
+      #name .word {
+        display: inline-block;
+        margin-right: 0.22em;
+      }
+      #tagline {
+        margin: 0;
+        font-size: 54px;
+        line-height: 1.25;
+        color: #e9dfd6;
+        max-width: 900px;
+      }
+
+      /* Product hero, persists through scenes 2 and 3 */
+      #hero {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 170px;
+        height: 1000px;
+      }
+      #hero-inner,
+      #hero-float {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      #product-img {
+        display: block;
+        max-width: 760px;
+        max-height: 940px;
+        object-fit: contain;
+        filter: drop-shadow(0 50px 60px rgba(0, 0, 0, 0.45));
+      }
+
+      /* Lower panel: features, then offer */
+      .lower {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 1190px;
+        height: 620px;
+      }
+      .lower-inner {
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        padding: 0 90px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      #features ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 34px;
+      }
+      #features li {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        font-size: 58px;
+        font-weight: 800;
+        letter-spacing: -0.01em;
+      }
+      .check {
+        flex: 0 0 auto;
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: var(--accent, #f2a65a);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .check svg {
+        display: block;
+        width: 34px;
+        height: 34px;
+      }
+
+      #offer .lower-inner {
+        align-items: center;
+        text-align: center;
+        gap: 34px;
+      }
+      #price-row {
+        display: flex;
+        align-items: baseline;
+        justify-content: center;
+        gap: 36px;
+      }
+      #price {
+        display: block;
+        font-weight: 800;
+        font-size: 190px;
+        line-height: 1;
+        letter-spacing: -0.04em;
+        color: var(--accent, #f2a65a);
+      }
+      #compare {
+        position: relative;
+        display: block;
+        font-size: 80px;
+        color: #b9aea6;
+      }
+      #strike {
+        position: absolute;
+        left: -6px;
+        right: -6px;
+        top: 50%;
+        height: 8px;
+        margin-top: -4px;
+        background: #f0e8e2;
+        border-radius: 4px;
+        transform-origin: left center;
+      }
+      #cta {
+        display: block;
+        padding: 30px 90px;
+        border-radius: 999px;
+        background: #fff;
+        color: #141016;
+        font-weight: 800;
+        font-size: 60px;
+      }
+      #url {
+        margin: 0;
+        font-size: 40px;
+        color: #d8cdc4;
+        letter-spacing: 0.02em;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="product-promo"
+      data-start="0"
+      data-width="1080"
+      data-height="1920"
+      data-duration="9"
+    >
+      <div id="bg">
+        <div id="blob-a" class="blob" data-layout-allow-overflow></div>
+        <div id="blob-b" class="blob" data-layout-allow-overflow></div>
+      </div>
+
+      <section id="hook" class="clip" data-start="0" data-duration="2.6" data-track-index="1">
+        <div id="hook-inner">
+          <span id="badge" data-var-text="badge">NEW</span>
+          <h1 id="name">Golden Hour Vitamin C Serum</h1>
+          <p id="tagline" data-var-text="tagline">Brighter skin in 14 days.</p>
+        </div>
+      </section>
+
+      <div id="hero" class="clip" data-start="2" data-duration="7" data-track-index="2">
+        <div id="hero-inner">
+          <div id="hero-float">
+            <img
+              id="product-img"
+              alt=""
+              src="assets/product-placeholder.svg"
+              data-var-src="image"
+            />
+          </div>
+        </div>
+      </div>
+
+      <section id="features" class="lower clip" data-start="2.4" data-duration="3.3" data-track-index="3">
+        <div class="lower-inner" id="features-inner">
+          <ul>
+            <li class="feature">
+              <span class="check"
+                ><svg viewBox="0 0 24 24" fill="none" stroke="#141016" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg
+              ></span>
+              <span data-var-text="feature1">15% pure vitamin C</span>
+            </li>
+            <li class="feature">
+              <span class="check"
+                ><svg viewBox="0 0 24 24" fill="none" stroke="#141016" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg
+              ></span>
+              <span data-var-text="feature2">Fragrance free</span>
+            </li>
+            <li class="feature">
+              <span class="check"
+                ><svg viewBox="0 0 24 24" fill="none" stroke="#141016" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg
+              ></span>
+              <span data-var-text="feature3">Dermatologist tested</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="offer" class="lower clip" data-start="5.6" data-duration="3.4" data-track-index="3">
+        <div class="lower-inner">
+          <div id="price-row">
+            <span id="price" data-var-text="price">$29</span>
+            <span id="compare"><span data-var-text="compareAtPrice" data-layout-allow-occlusion>$39</span><span id="strike" data-layout-allow-occlusion></span></span>
+          </div>
+          <span id="cta" data-var-text="cta">Shop now</span>
+          <p id="url" data-var-text="shopUrl">yourstore.com</p>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      (function () {
+        const vars = (window.__hyperframes && window.__hyperframes.getVariables()) || {};
+        const name = vars.productName || "Golden Hour Vitamin C Serum";
+
+        // Hide optional pieces when their variable is empty.
+        if (!vars.badge) document.getElementById("badge").style.display = "none";
+        if (!vars.compareAtPrice) document.getElementById("compare").style.display = "none";
+        document.querySelectorAll(".feature").forEach(function (li, i) {
+          if (!vars["feature" + (i + 1)]) li.style.display = "none";
+        });
+
+        // Split the product name into words so each can rise in on its own.
+        const nameEl = document.getElementById("name");
+        nameEl.textContent = "";
+        name.split(/\s+/).forEach(function (w) {
+          const span = document.createElement("span");
+          span.className = "word";
+          span.textContent = w;
+          nameEl.appendChild(span);
+        });
+
+        function build() {
+          // Shrink the name until it fits in three lines.
+          const pretext = window.__hyperframes && window.__hyperframes.pretext;
+          let size = 140;
+          if (pretext) {
+            while (size > 72) {
+              const prepared = pretext.prepare(name, "800 " + size + 'px "Inter"');
+              if (pretext.layout(prepared, 900, size * 1.02).lineCount <= 3) break;
+              size -= 6;
+            }
+          } else if (name.length > 26) {
+            size = name.length > 38 ? 84 : 108;
+          }
+          nameEl.style.fontSize = size + "px";
+
+          const tl = gsap.timeline({ paused: true });
+
+          // Background drift across the whole spot.
+          tl.fromTo("#blob-a", { x: 0, y: 0 }, { x: 220, y: 160, duration: 9, ease: "sine.inOut" }, 0);
+          tl.fromTo("#blob-b", { x: 0, y: 0 }, { x: -260, y: -220, duration: 9, ease: "sine.inOut" }, 0);
+
+          // Scene 1: hook.
+          tl.fromTo("#badge", { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.45, ease: "back.out(2)" }, 0.1);
+          tl.fromTo("#name .word", { y: 90, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out", stagger: 0.08 }, 0.25);
+          tl.fromTo("#tagline", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power2.out" }, 0.9);
+          tl.to("#hook-inner", { y: -80, opacity: 0, duration: 0.5, ease: "power2.in" }, 2.05);
+
+          // Scene 2: product hero + features.
+          tl.fromTo(
+            "#hero-inner",
+            { y: 260, scale: 0.7, rotation: -8, opacity: 0 },
+            { y: 0, scale: 1, rotation: 0, opacity: 1, duration: 0.9, ease: "power3.out" },
+            2.0
+          );
+          tl.fromTo("#hero-float", { y: 0 }, { y: -18, duration: 1.4, ease: "sine.inOut", yoyo: true, repeat: 3 }, 2.9);
+          tl.fromTo(".feature", { x: -90, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: "power3.out", stagger: 0.32 }, 2.6);
+          tl.to("#features-inner", { opacity: 0, y: 40, duration: 0.35, ease: "power2.in" }, 5.3);
+
+          // Scene 3: offer.
+          tl.fromTo("#price", { scale: 0.5, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.55, ease: "back.out(1.8)" }, 5.65);
+          tl.fromTo("#compare", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 5.9);
+          tl.fromTo("#strike", { scaleX: 0 }, { scaleX: 1, duration: 0.35, ease: "power2.out" }, 6.15);
+          tl.fromTo("#cta", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, 6.4);
+          tl.fromTo("#url", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 6.8);
+          tl.to("#cta", { scale: 1.06, duration: 0.4, ease: "sine.inOut", yoyo: true, repeat: 3 }, 7.2);
+
+          window.__timelines["product-promo"] = tl;
+        }
+
+        if (document.fonts && document.fonts.ready) {
+          document.fonts.ready.then(build);
+        } else {
+          build();
+        }
+      })();
+    </script>
+  </body>
+</html>
