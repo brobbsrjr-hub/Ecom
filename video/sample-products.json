@@ -1,0 +1,26 @@
+[
+  {
+    "product": {
+      "name": "Golden Hour Vitamin C Serum",
+      "slug": "golden-hour-serum",
+      "description": "Brighter skin in 14 days. A lightweight serum with 15% vitamin C and ferulic acid.",
+      "basePrice": 39,
+      "tags": ["15% pure vitamin C", "fragrance-free", "dermatologist tested"]
+    },
+    "promo": { "salePrice": 29, "badge": "NEW" }
+  },
+  {
+    "product": {
+      "name": "Midnight Recovery Night Cream",
+      "slug": "midnight-recovery-cream",
+      "description": "Wake up to calm, cushioned skin. Ceramides and peptides repair overnight.",
+      "basePrice": 48,
+      "tags": ["ceramide complex", "vegan", "for all skin types"],
+      "variants": [
+        { "price": 48, "stock": 12 },
+        { "price": 34, "stock": 30 }
+      ]
+    },
+    "promo": { "accent": "#8fb3ff", "bg": "#0e1220", "cta": "Get yours" }
+  }
+]

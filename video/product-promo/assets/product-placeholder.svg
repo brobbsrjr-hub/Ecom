@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="600" height="800">
+  <defs>
+    <linearGradient id="glass" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#c98a4b"/>
+      <stop offset="0.35" stop-color="#f2b872"/>
+      <stop offset="0.6" stop-color="#d9934f"/>
+      <stop offset="1" stop-color="#8f5524"/>
+    </linearGradient>
+    <linearGradient id="cap" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#1b1b1f"/>
+      <stop offset="0.4" stop-color="#4a4a52"/>
+      <stop offset="1" stop-color="#121214"/>
+    </linearGradient>
+    <linearGradient id="bulb" x1="0" x2="1">
+      <stop offset="0" stop-color="#26262b"/>
+      <stop offset="0.45" stop-color="#5b5b63"/>
+      <stop offset="1" stop-color="#1a1a1e"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="300" cy="770" rx="170" ry="18" fill="#000" opacity="0.18"/>
+  <path d="M255 70 q0 -50 45 -50 q45 0 45 50 v70 h-90z" fill="url(#bulb)"/>
+  <rect x="225" y="130" width="150" height="110" rx="14" fill="url(#cap)"/>
+  <rect x="245" y="236" width="110" height="34" rx="6" fill="#2a2a2f"/>
+  <path d="M175 330 q0 -60 60 -60 h130 q60 0 60 60 v380 q0 50 -50 50 h-150 q-50 0 -50 -50z" fill="url(#glass)"/>
+  <path d="M200 340 q0 -40 30 -45 v420 q-30 -6 -30 -40z" fill="#fff" opacity="0.28"/>
+  <rect x="205" y="430" width="190" height="200" rx="10" fill="#fbf4ea"/>
+  <rect x="235" y="470" width="130" height="14" rx="7" fill="#2b2118"/>
+  <rect x="255" y="500" width="90" height="8" rx="4" fill="#8f7a66"/>
+  <rect x="240" y="560" width="120" height="6" rx="3" fill="#c9b8a4"/>
+  <rect x="260" y="580" width="80" height="6" rx="3" fill="#c9b8a4"/>
+</svg>
