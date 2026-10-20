@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "ScraplingServer": {
+      "command": "uvx",
+      "args": ["--from", "scrapling[ai]", "scrapling", "mcp"]
+    }
+  }
+}
