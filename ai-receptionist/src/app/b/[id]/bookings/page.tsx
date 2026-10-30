@@ -1,6 +1,6 @@
 import { SubmitButton } from '@/components/SubmitButton';
 import { businessById } from '@/lib/businesses';
-import { formatDateTime } from '@/lib/format';
+import { formatDateTime, formatPhone } from '@/lib/format';
 import { userClient } from '@/lib/supabase/server';
 import type { Booking } from '@/lib/types';
 import { cancelBooking } from '../actions';
@@ -37,7 +37,7 @@ export default async function Bookings({ params }: { params: Promise<{ id: strin
                   )}
                 </div>
                 <div className="text-sm text-slate-600">
-                  {[b.service, b.contact_phone, b.notes].filter(Boolean).join(' · ')}
+                  {[b.service, b.contact_phone && formatPhone(b.contact_phone), b.notes].filter(Boolean).join(' · ')}
                 </div>
               </div>
               <form action={cancelBooking.bind(null, id, b.id)}>

@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { parseBusinessForm } from '@/lib/businessForm';
+import { formatPhone } from '@/lib/format';
 
 function form(values: Record<string, string>): FormData {
   const f = new FormData();
@@ -48,5 +49,12 @@ describe('parseBusinessForm', () => {
   it('rejects bad phone numbers', () => {
     const res = parseBusinessForm(form({ ...base, owner_phone: '12' }), true);
     expect(res).toEqual({ ok: false, error: 'Phone numbers must be in +15551234567 format' });
+  });
+});
+
+describe('formatPhone', () => {
+  it('formats US numbers and leaves others alone', () => {
+    expect(formatPhone('+15125550142')).toBe('(512) 555-0142');
+    expect(formatPhone('+442071234567')).toBe('+442071234567');
   });
 });

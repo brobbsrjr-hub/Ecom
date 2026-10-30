@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { AutoRefresh } from '@/components/AutoRefresh';
-import { formatRelative } from '@/lib/format';
+import { formatPhone, formatRelative } from '@/lib/format';
 import { userClient } from '@/lib/supabase/server';
 import type { Conversation } from '@/lib/types';
 
@@ -45,7 +45,7 @@ export default async function Inbox({ params }: { params: Promise<{ id: string }
             <li key={c.id}>
               <Link href={`/b/${id}/inbox/${c.id}`} className="block px-4 py-3 hover:bg-slate-50">
                 <div className="flex items-center justify-between gap-3">
-                  <span className="font-medium">{c.contact_name ?? c.contact_phone}</span>
+                  <span className="font-medium">{c.contact_name ?? formatPhone(c.contact_phone)}</span>
                   <span className="text-xs text-slate-500">{formatRelative(c.last_message_at)}</span>
                 </div>
                 <div className="mt-1 flex items-center gap-2">

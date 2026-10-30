@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { formatPhone } from '@/lib/format';
 import { userClient } from '@/lib/supabase/server';
 import type { Business } from '@/lib/types';
 
@@ -28,7 +29,7 @@ export default async function AdminHome() {
                   <span className="font-medium">{b.name}</span>
                 </span>
                 <span className="text-sm text-slate-500">
-                  {b.twilio_number ?? 'No number yet'} · AI {b.ai_enabled ? 'on' : 'off'}
+                  {b.twilio_number ? formatPhone(b.twilio_number) : 'No number yet'} · AI {b.ai_enabled ? 'on' : 'off'}
                 </span>
               </Link>
             </li>

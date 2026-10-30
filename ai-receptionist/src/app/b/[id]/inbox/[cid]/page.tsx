@@ -4,7 +4,7 @@ import { AutoRefresh } from '@/components/AutoRefresh';
 import { MessageList } from '@/components/MessageList';
 import { SubmitButton } from '@/components/SubmitButton';
 import { businessById } from '@/lib/businesses';
-import { formatDateTime } from '@/lib/format';
+import { formatDateTime, formatPhone } from '@/lib/format';
 import { userClient } from '@/lib/supabase/server';
 import type { Conversation, Message } from '@/lib/types';
 import { replyAsHuman, setAiPaused } from '../../actions';
@@ -34,8 +34,8 @@ export default async function Thread({ params }: { params: Promise<{ id: string;
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <div>
           <Link href={`/b/${id}/inbox`} className="text-sm text-slate-500 hover:text-slate-800">← Inbox</Link>
-          <h1 className="text-xl font-semibold">{conversation.contact_name ?? conversation.contact_phone}</h1>
-          {conversation.contact_name && <p className="text-sm text-slate-500">{conversation.contact_phone}</p>}
+          <h1 className="text-xl font-semibold">{conversation.contact_name ?? formatPhone(conversation.contact_phone)}</h1>
+          {conversation.contact_name && <p className="text-sm text-slate-500">{formatPhone(conversation.contact_phone)}</p>}
         </div>
         <form action={togglePause}>
           <SubmitButton className={conversation.ai_paused ? 'btn' : 'btn-ghost'}>
@@ -50,7 +50,7 @@ export default async function Thread({ params }: { params: Promise<{ id: string;
         </p>
       )}
 
-      <div className="card mb-4 max-h-[60vh] overflow-y-auto bg-slate-50 p-4">
+      <div className="card mb-4 flex max-h-[60vh] flex-col-reverse overflow-y-auto bg-slate-50 p-4">
         <MessageList messages={messages} timeLabel={(m) => formatDateTime(m.created_at, business.time_zone)} />
       </div>
 
